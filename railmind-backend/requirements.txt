@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+langgraph
+anthropic
+redis[asyncio]
+asyncpg
+chromadb
+pydantic>=2.0
+python-dotenv
+sentence-transformers

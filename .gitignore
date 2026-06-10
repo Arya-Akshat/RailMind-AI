@@ -1,0 +1,9 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+.env
+chroma_store/
+exam_incident_memory/
+*.log
+.DS_Store
