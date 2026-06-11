@@ -6,10 +6,17 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class Settings:
-    ANTHROPIC_API_KEY: str = os.getenv("ANTHROPIC_API_KEY", "")
-    REDIS_URL: str = os.getenv("REDIS_URL", "redis://localhost:6379")
-    DATABASE_URL: str = os.getenv("DATABASE_URL", "postgresql://railmind:railmind@localhost:5432/railmind")
-    CHROMA_PATH: str = os.getenv("CHROMA_PATH", "./chroma_store")
-    MODEL: str = os.getenv("MODEL", "claude-3-5-sonnet-20241022")
+    def __init__(self):
+        required_keys = ["ANTHROPIC_API_KEY", "REDIS_URL", "DATABASE_URL", "CHROMA_PATH", "MODEL"]
+        for key in required_keys:
+            val = os.getenv(key)
+            if val is None:
+                raise ValueError(f"CRITICAL: Environment variable '{key}' is missing from .env or environment!")
+        
+        self.ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
+        self.REDIS_URL = os.getenv("REDIS_URL")
+        self.DATABASE_URL = os.getenv("DATABASE_URL")
+        self.CHROMA_PATH = os.getenv("CHROMA_PATH")
+        self.MODEL = os.getenv("MODEL")
 
 settings = Settings()
