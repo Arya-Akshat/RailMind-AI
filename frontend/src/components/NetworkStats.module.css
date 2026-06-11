@@ -1,0 +1,70 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border-subtle);
+  border-top: none;
+}
+
+/* Last item spans full width if odd count */
+.grid > :last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  background: var(--glass-bg);
+  transition: background 0.2s;
+}
+
+.stat:hover {
+  background: var(--bg-elevated);
+}
+
+.statIcon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.statContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.statValue {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.statLabel {
+  font-size: 0.62rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.statSub {
+  font-size: 0.6rem;
+  color: var(--text-tertiary);
+  font-style: italic;
+}
