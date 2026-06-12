@@ -1,27 +1,29 @@
 import json
 import logging
-from anthropic import AsyncAnthropic
+from groq import AsyncGroq
 from config import settings
 
 logger = logging.getLogger(__name__)
 
-async def call_claude(system: str, user: str, max_tokens=600) -> str:
-    if not settings.ANTHROPIC_API_KEY or settings.ANTHROPIC_API_KEY.startswith("sk-ant-..."):
-        logger.warning("!!! RUNNING IN MOCK MODE (NO VALID ANTHROPIC_API_KEY) !!!")
+async def call_llm(system: str, user: str, max_tokens=600) -> str:
+    if not settings.GROQ_API_KEY or settings.GROQ_API_KEY.startswith("gsk_..."):
+        logger.warning("!!! RUNNING IN MOCK MODE (NO VALID GROQ_API_KEY) !!!")
         return get_mock_response(system, user)
         
-    client = AsyncAnthropic(api_key=settings.ANTHROPIC_API_KEY)
-    msg = await client.messages.create(
+    client = AsyncGroq(api_key=settings.GROQ_API_KEY)
+    response = await client.chat.completions.create(
         model=settings.MODEL,
         max_tokens=max_tokens,
-        system=system,
-        messages=[{"role": "user", "content": user}]
+        messages=[
+            {"role": "system", "content": system},
+            {"role": "user", "content": user}
+        ]
     )
-    return msg.content[0].text
+    return response.choices[0].message.content
 
-async def call_claude_json(system: str, user: str, max_tokens=600) -> dict:
+async def call_llm_json(system: str, user: str, max_tokens=600) -> dict:
     try:
-        response = await call_claude(system, user, max_tokens)
+        response = await call_llm(system, user, max_tokens)
         return _parse_json(response)
     except Exception as e:
         logger.warning(f"JSON call failed: {e}. Retrying once with JSON correction prompt...")
@@ -31,11 +33,16 @@ async def call_claude_json(system: str, user: str, max_tokens=600) -> dict:
             "with no additional conversational filler or markdown markers."
         )
         try:
-            response = await call_claude(system, correction_user, max_tokens)
+            response = await call_llm(system, correction_user, max_tokens)
             return _parse_json(response)
         except Exception as e_retry:
             logger.error(f"Retry JSON parsing failed: {e_retry}")
             raise e_retry
+
+# Maintain backward compatibility aliases
+call_claude = call_llm
+call_claude_json = call_llm_json
+
 
 def _parse_json(text: str) -> dict:
     clean_text = text.strip()
