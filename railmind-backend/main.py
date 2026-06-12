@@ -7,33 +7,51 @@ from models.incident import SensorEvent
 from models.agent_message import ErrorMessage
 from ws.manager import manager
 from bus.redis_bus import start_sensor_listener
-from db.postgres import create_pool, run_schema_migrations, get_recent_incidents, clear_database
+from db.postgres import create_pool, run_schema_migrations, get_recent_incidents, clear_database, get_pool
 from db.chroma import clear_chroma
 from graph.orchestrator import app_graph, RailMindState
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Initialize DB Pool
-    pool = await create_pool()
-    app.state.pool = pool
-    
-    # Run Schema Migrations
-    await run_schema_migrations(pool)
-    
-    # Start Redis Pub/Sub sensor listener task
-    redis_task = asyncio.create_task(start_sensor_listener(handle_sensor_event))
-    
-    yield
-    
-    # Clean up Redis listener
-    redis_task.cancel()
+    # Initialize DB Pool — gracefully handle missing PostgreSQL
+    pool = None
     try:
-        await redis_task
-    except asyncio.CancelledError:
-        pass
-        
+        pool = await create_pool()
+        app.state.pool = pool
+        await run_schema_migrations(pool)
+        print("[OK] PostgreSQL connected and migrations applied.")
+    except Exception as e:
+        print(f"[WARN] PostgreSQL unavailable ({e}). Running in memory-only mode.")
+        app.state.pool = None
+
+    # Start Redis Pub/Sub sensor listener task — gracefully handle missing Redis
+    redis_task = None
+    try:
+        redis_task = asyncio.create_task(start_sensor_listener(handle_sensor_event))
+        # Give it a moment to connect; if it fails fast, we catch it
+        await asyncio.sleep(0.5)
+        if redis_task.done() and redis_task.exception():
+            raise redis_task.exception()
+        print("[OK] Redis sensor listener started.")
+    except Exception as e:
+        print(f"[WARN] Redis unavailable ({e}). Sensor injection via /inject endpoint only.")
+        if redis_task and not redis_task.done():
+            redis_task.cancel()
+        redis_task = None
+
+    yield
+
+    # Clean up Redis listener
+    if redis_task and not redis_task.done():
+        redis_task.cancel()
+        try:
+            await redis_task
+        except asyncio.CancelledError:
+            pass
+
     # Close DB Pool
-    await pool.close()
+    if pool:
+        await pool.close()
 
 app = FastAPI(
     title="RailMind Autonomous Operations Backend",
@@ -69,8 +87,11 @@ async def websocket_endpoint(ws: WebSocket):
 @app.get("/incidents")
 async def list_incidents(request: Request):
     try:
-        rows = await get_recent_incidents(request.app.state.pool, limit=20)
-        return rows
+        pool = request.app.state.pool
+        if pool:
+            rows = await get_recent_incidents(pool, limit=20)
+            return rows
+        return []
     except Exception as e:
         return {"error": str(e)}
 
@@ -90,7 +111,9 @@ async def reset_demo(request: Request):
     Ensures a clean state for demo rehearsals.
     """
     try:
-        await clear_database(request.app.state.pool)
+        pool = request.app.state.pool
+        if pool:
+            await clear_database(pool)
         clear_chroma()
         return {"status": "success", "detail": "Incident store and memory cleared successfully."}
     except Exception as e:

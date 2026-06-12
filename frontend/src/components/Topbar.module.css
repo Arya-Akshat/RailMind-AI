@@ -1,0 +1,146 @@
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--topbar-height);
+  padding: 0 var(--space-xl);
+  background: rgba(6, 8, 15, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-subtle);
+  z-index: 100;
+}
+
+/* ─── Brand ─── */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.logoContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+}
+
+.logoIcon {
+  width: 22px;
+  height: 22px;
+  color: var(--accent-emerald);
+  z-index: 2;
+  position: relative;
+}
+
+.logoPulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--accent-emerald-dim);
+  animation: pulse-ring 2.5s ease-out infinite;
+  color: var(--accent-emerald-dim);
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.brandName {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.brandSub {
+  font-size: 0.65rem;
+  font-weight: 400;
+  color: var(--text-tertiary);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ─── Center status ─── */
+.center {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.activityIcon {
+  width: 14px;
+  height: 14px;
+  color: var(--accent-emerald);
+}
+
+.statusText {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+/* ─── Right ─── */
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.connectionBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.connected {
+  background: rgba(16, 185, 129, 0.12);
+  color: var(--accent-emerald);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.connecting {
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--severity-medium);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+.disconnected {
+  background: rgba(239, 68, 68, 0.12);
+  color: var(--severity-critical);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.clock {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.clockLabel {
+  font-size: 0.6rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.clockTime {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+}

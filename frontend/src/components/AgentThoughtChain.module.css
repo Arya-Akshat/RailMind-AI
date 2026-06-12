@@ -1,0 +1,327 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ─── Live Indicator ─── */
+.liveIndicator {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--severity-critical);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.liveDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--severity-critical);
+  animation: pulse-dot 1s ease-in-out infinite;
+}
+
+/* ─── Context Bar ─── */
+.contextBar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg);
+  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.contextSeverity {
+  font-size: 0.58rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 100px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.contextId {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-tertiary);
+}
+
+.contextLocation {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  margin-left: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ─── Timeline ─── */
+.timeline {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ─── Node ─── */
+.node {
+  display: flex;
+  gap: var(--space-lg);
+  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+.nodePending {
+  opacity: 0.35;
+  animation: none;
+}
+
+.nodeThinking {
+  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+/* ─── Connector (vertical timeline) ─── */
+.connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 40px;
+}
+
+.connectorLine {
+  flex: 1;
+  width: 1.5px;
+  background: var(--border-medium);
+  min-height: 12px;
+}
+
+.connectorDot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-emerald);
+  background: var(--bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.3s;
+}
+
+.connectorDotPending {
+  border-color: var(--text-muted);
+  border-style: dashed;
+}
+
+.connectorDotThinking {
+  animation: pulse-dot 1.2s ease-in-out infinite;
+}
+
+/* ─── Node Content ─── */
+.nodeContent {
+  flex: 1;
+  padding: var(--space-md) 0;
+  min-width: 0;
+}
+
+.nodeHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.agentInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.agentName {
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.agentDesc {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.nodeStatus {
+  flex-shrink: 0;
+}
+
+.pendingIcon {
+  color: var(--text-muted);
+}
+
+/* ─── Action Badge ─── */
+.actionBadge {
+  display: inline-block;
+  padding: 3px 10px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+/* ─── Thought Text ─── */
+.thought {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: var(--space-sm);
+}
+
+.cursor {
+  color: var(--accent-emerald);
+  animation: typewriter-blink 0.8s step-end infinite;
+  font-weight: 100;
+}
+
+/* ─── Output Toggle ─── */
+.outputToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 0;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: color 0.2s;
+}
+
+.outputToggle:hover {
+  color: var(--text-secondary);
+}
+
+.outputPre {
+  margin-top: var(--space-sm);
+  padding: var(--space-md);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-tertiary);
+  overflow-x: auto;
+  line-height: 1.5;
+  animation: fadeIn 0.2s ease;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ─── Thinking Bar ─── */
+.thinkingBar {
+  width: 100%;
+  height: 3px;
+  background: var(--bg-secondary);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: var(--space-sm);
+}
+
+.thinkingBarInner {
+  height: 100%;
+  width: 40%;
+  border-radius: 3px;
+  opacity: 0.6;
+  animation: shimmer 1.8s ease-in-out infinite;
+  background-size: 200% 100%;
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    currentColor 50%,
+    transparent 100%
+  );
+}
+
+.thinkingLabel {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ─── Resolution Card ─── */
+.resolutionCard {
+  margin-top: var(--space-lg);
+  padding: var(--space-xl);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(6, 182, 212, 0.05) 100%);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: var(--radius-lg);
+  animation: glow-border 3s ease-in-out infinite;
+}
+
+.resolutionHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--accent-emerald);
+}
+
+.resolutionIcon {
+  color: var(--accent-emerald);
+}
+
+.resolutionTime {
+  font-family: var(--font-mono);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent-emerald);
+  margin-bottom: var(--space-sm);
+  letter-spacing: -0.02em;
+}
+
+.resolutionSummary {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ─── Empty State ─── */
+.emptyState {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  opacity: 0.4;
+}
+
+.emptyIcon {
+  color: var(--accent-emerald);
+  margin-bottom: var(--space-sm);
+  opacity: 0.5;
+}
+
+.emptyState p {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.emptyState span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}

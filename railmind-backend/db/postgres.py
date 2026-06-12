@@ -50,6 +50,8 @@ async def run_schema_migrations(pool):
         """)
 
 async def insert_incident(pool, incident: Incident):
+    if pool is None:
+        return
     async with pool.acquire() as conn:
         # Convert SensorEvent to dict or JSON string to insert as JSONB.
         # asyncpg auto-serializes dicts to jsonb if encoder is set, but to be safe we can use JSON string and cast.
@@ -72,6 +74,8 @@ async def insert_incident(pool, incident: Incident):
         )
 
 async def update_incident_resolved(pool, incident_id: str, summary: str):
+    if pool is None:
+        return
     async with pool.acquire() as conn:
         await conn.execute(
             """
@@ -85,6 +89,8 @@ async def update_incident_resolved(pool, incident_id: str, summary: str):
         )
 
 async def insert_work_order(pool, work_order: WorkOrder):
+    if pool is None:
+        return
     async with pool.acquire() as conn:
         await conn.execute(
             """
@@ -102,6 +108,8 @@ async def insert_work_order(pool, work_order: WorkOrder):
         )
 
 async def insert_reroute(pool, incident_id: str, reroute: TrainReroute):
+    if pool is None:
+        return
     async with pool.acquire() as conn:
         await conn.execute(
             """
@@ -118,6 +126,8 @@ async def insert_reroute(pool, incident_id: str, reroute: TrainReroute):
         )
 
 async def get_recent_incidents(pool, limit=20) -> list[dict]:
+    if pool is None:
+        return []
     async with pool.acquire() as conn:
         rows = await conn.fetch(
             """
@@ -146,5 +156,7 @@ async def get_recent_incidents(pool, limit=20) -> list[dict]:
         return result
 
 async def clear_database(pool):
+    if pool is None:
+        return
     async with pool.acquire() as conn:
         await conn.execute("TRUNCATE incidents CASCADE;")
