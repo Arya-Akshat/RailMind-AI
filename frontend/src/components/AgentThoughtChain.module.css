@@ -3,6 +3,7 @@
   flex-direction: column;
   height: 100%;
   overflow: hidden;
+  background: var(--bg-primary);
 }
 
 /* ─── Live Indicator ─── */
@@ -10,49 +11,54 @@
   margin-left: auto;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  font-size: 0.6rem;
-  font-weight: 700;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 800;
   color: var(--severity-critical);
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
 .liveDot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
+  width: 8px;
+  height: 8px;
   background: var(--severity-critical);
-  animation: pulse-dot 1s ease-in-out infinite;
+  animation: blink-cursor 1s step-end infinite;
 }
 
 /* ─── Context Bar ─── */
 .contextBar {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-md);
   padding: var(--space-sm) var(--space-lg);
-  border-bottom: 1px solid var(--border-subtle);
-  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid var(--border-main);
+  background: var(--bg-secondary);
 }
 
 .contextSeverity {
-  font-size: 0.58rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
   font-weight: 800;
-  padding: 2px 7px;
-  border-radius: 100px;
+  padding: 2px 6px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  border: 1px solid var(--border-main);
+  color: var(--text-primary) !important;
+  background: transparent !important;
 }
 
 .contextId {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--text-tertiary);
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--text-primary);
 }
 
 .contextLocation {
-  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
   color: var(--text-secondary);
   margin-left: auto;
   overflow: hidden;
@@ -68,24 +74,22 @@
   display: flex;
   flex-direction: column;
   gap: 0;
+  background: var(--bg-primary);
 }
 
 /* ─── Node ─── */
 .node {
   display: flex;
   gap: var(--space-lg);
-  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  opacity: 0;
+  opacity: 1;
 }
 
 .nodePending {
-  opacity: 0.35;
-  animation: none;
+  opacity: 0.4;
 }
 
 .nodeThinking {
-  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  opacity: 0;
+  opacity: 1;
 }
 
 /* ─── Connector (vertical timeline) ─── */
@@ -94,36 +98,38 @@
   flex-direction: column;
   align-items: center;
   flex-shrink: 0;
-  width: 40px;
+  width: 32px;
 }
 
 .connectorLine {
   flex: 1;
-  width: 1.5px;
-  background: var(--border-medium);
+  width: 2px;
+  background: var(--border-main);
   min-height: 12px;
 }
 
 .connectorDot {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 2px solid var(--accent-emerald);
-  background: var(--bg-secondary);
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--border-main);
+  background: var(--bg-primary);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: all 0.3s;
+  transition: all 0.1s;
 }
 
 .connectorDotPending {
-  border-color: var(--text-muted);
-  border-style: dashed;
+  border-style: dotted;
+  background: transparent;
 }
 
 .connectorDotThinking {
-  animation: pulse-dot 1.2s ease-in-out infinite;
+  background: var(--text-primary);
+}
+.connectorDotThinking span, .connectorDotThinking svg {
+  color: var(--bg-primary) !important;
 }
 
 /* ─── Node Content ─── */
@@ -131,6 +137,7 @@
   flex: 1;
   padding: var(--space-md) 0;
   min-width: 0;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .nodeHeader {
@@ -138,24 +145,28 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: var(--space-sm);
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--space-xs);
 }
 
 .agentInfo {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 2px;
 }
 
 .agentName {
-  font-size: 0.88rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .agentDesc {
-  font-size: 0.68rem;
-  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
 }
 
 .nodeStatus {
@@ -169,61 +180,63 @@
 /* ─── Action Badge ─── */
 .actionBadge {
   display: inline-block;
-  padding: 3px 10px;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-medium);
-  border-radius: var(--radius-sm);
-  font-size: 0.72rem;
-  font-weight: 500;
-  color: var(--text-primary);
+  padding: 2px 8px;
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
   margin-bottom: var(--space-sm);
 }
 
 /* ─── Thought Text ─── */
 .thought {
-  font-size: 0.78rem;
-  color: var(--text-secondary);
-  line-height: 1.65;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-primary);
+  line-height: 1.5;
   margin-bottom: var(--space-sm);
 }
 
 .cursor {
-  color: var(--accent-emerald);
-  animation: typewriter-blink 0.8s step-end infinite;
-  font-weight: 100;
+  color: var(--text-primary);
+  animation: blink-cursor 1s step-end infinite;
+  font-weight: 800;
 }
 
 /* ─── Output Toggle ─── */
 .outputToggle {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 2px 0;
+  gap: 6px;
+  padding: 4px 8px;
   font-family: var(--font-mono);
   font-size: 0.65rem;
-  color: var(--text-muted);
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
   cursor: pointer;
-  background: none;
-  border: none;
-  transition: color 0.2s;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-main);
+  transition: background 0.1s;
 }
 
 .outputToggle:hover {
-  color: var(--text-secondary);
+  background: var(--border-subtle);
+  color: var(--text-primary);
 }
 
 .outputPre {
   margin-top: var(--space-sm);
   padding: var(--space-md);
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border: 1px solid var(--border-main);
   font-family: var(--font-mono);
-  font-size: 0.68rem;
-  color: var(--text-tertiary);
+  font-size: 0.7rem;
   overflow-x: auto;
-  line-height: 1.5;
-  animation: fadeIn 0.2s ease;
+  line-height: 1.4;
   white-space: pre-wrap;
   word-break: break-word;
 }
@@ -231,69 +244,70 @@
 /* ─── Thinking Bar ─── */
 .thinkingBar {
   width: 100%;
-  height: 3px;
+  height: 8px;
   background: var(--bg-secondary);
-  border-radius: 3px;
-  overflow: hidden;
+  border: 1px solid var(--border-main);
   margin-bottom: var(--space-sm);
+  position: relative;
+  overflow: hidden;
 }
 
 .thinkingBarInner {
   height: 100%;
-  width: 40%;
-  border-radius: 3px;
-  opacity: 0.6;
-  animation: shimmer 1.8s ease-in-out infinite;
-  background-size: 200% 100%;
-  background-image: linear-gradient(
-    90deg,
-    transparent 0%,
-    currentColor 50%,
-    transparent 100%
-  );
+  width: 30%;
+  background: var(--text-primary);
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: slideInRight 1s steps(10) infinite alternate;
 }
 
 .thinkingLabel {
+  font-family: var(--font-mono);
   font-size: 0.7rem;
-  color: var(--text-muted);
-  font-style: italic;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
 }
 
 /* ─── Resolution Card ─── */
 .resolutionCard {
   margin-top: var(--space-lg);
   padding: var(--space-xl);
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(6, 182, 212, 0.05) 100%);
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  border-radius: var(--radius-lg);
-  animation: glow-border 3s ease-in-out infinite;
+  background: var(--bg-primary);
+  border: 3px solid var(--border-main);
 }
 
 .resolutionHeader {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-sm);
-  font-size: 0.92rem;
-  font-weight: 700;
-  color: var(--accent-emerald);
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--border-main);
+  padding-bottom: var(--space-sm);
 }
 
 .resolutionIcon {
-  color: var(--accent-emerald);
+  color: var(--text-primary);
 }
 
 .resolutionTime {
   font-family: var(--font-mono);
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--accent-emerald);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-primary);
   margin-bottom: var(--space-sm);
   letter-spacing: -0.02em;
 }
 
 .resolutionSummary {
-  font-size: 0.78rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
   color: var(--text-secondary);
   line-height: 1.6;
 }
@@ -306,22 +320,24 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-sm);
-  opacity: 0.4;
-}
-
-.emptyIcon {
-  color: var(--accent-emerald);
-  margin-bottom: var(--space-sm);
   opacity: 0.5;
 }
 
+.emptyIcon {
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
 .emptyState p {
-  font-size: 0.92rem;
-  font-weight: 500;
-  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--text-primary);
 }
 
 .emptyState span {
+  font-family: var(--font-sans);
   font-size: 0.75rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }

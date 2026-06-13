@@ -1,13 +1,10 @@
 .topbar {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
   height: var(--topbar-height);
-  padding: 0 var(--space-xl);
-  background: rgba(6, 8, 15, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-main);
   z-index: 100;
 }
 
@@ -16,6 +13,9 @@
   display: flex;
   align-items: center;
   gap: var(--space-md);
+  padding: 0 var(--space-lg);
+  border-right: 1px solid var(--border-main);
+  background: var(--bg-secondary);
 }
 
 .logoContainer {
@@ -23,124 +23,130 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: 24px;
+  height: 24px;
 }
 
 .logoIcon {
-  width: 22px;
-  height: 22px;
-  color: var(--accent-emerald);
+  width: 18px;
+  height: 18px;
+  color: var(--text-primary);
   z-index: 2;
   position: relative;
 }
 
 .logoPulse {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: var(--accent-emerald-dim);
-  animation: pulse-ring 2.5s ease-out infinite;
-  color: var(--accent-emerald-dim);
+  display: none; /* Removed neon pulse */
 }
 
 .brandText {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  justify-content: center;
 }
 
 .brandName {
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
   color: var(--text-primary);
-  line-height: 1.2;
+  text-transform: uppercase;
+  line-height: 1;
 }
 
 .brandSub {
-  font-size: 0.65rem;
-  font-weight: 400;
-  color: var(--text-tertiary);
-  letter-spacing: 0.04em;
+  font-family: var(--font-sans);
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+  margin-top: 2px;
 }
 
 /* ─── Center status ─── */
 .center {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-md);
+  padding: 0 var(--space-lg);
+  flex: 1;
 }
 
 .activityIcon {
   width: 14px;
   height: 14px;
-  color: var(--accent-emerald);
+  color: var(--text-primary);
 }
 
 .statusText {
-  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
   color: var(--text-secondary);
-  font-weight: 400;
+  font-weight: 500;
+  text-transform: uppercase;
 }
 
 /* ─── Right ─── */
 .right {
   display: flex;
-  align-items: center;
-  gap: var(--space-lg);
+  align-items: stretch;
 }
 
 .connectionBadge {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 12px;
-  border-radius: 100px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.03em;
+  gap: 8px;
+  padding: 0 var(--space-xl);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
+  border-left: 1px solid var(--border-main);
+  background: var(--bg-primary);
 }
 
 .connected {
-  background: rgba(16, 185, 129, 0.12);
-  color: var(--accent-emerald);
-  border: 1px solid rgba(16, 185, 129, 0.25);
+  color: var(--text-primary);
+}
+.connected svg {
+  color: var(--accent-blue);
 }
 
 .connecting {
-  background: rgba(245, 158, 11, 0.12);
   color: var(--severity-medium);
-  border: 1px solid rgba(245, 158, 11, 0.25);
-  animation: pulse-dot 1.5s ease-in-out infinite;
+  animation: blink-cursor 1s step-end infinite;
 }
 
 .disconnected {
-  background: rgba(239, 68, 68, 0.12);
   color: var(--severity-critical);
-  border: 1px solid rgba(239, 68, 68, 0.25);
+  background: rgba(209, 17, 36, 0.1); /* Slight red tint */
 }
 
 .clock {
   display: flex;
-  align-items: baseline;
-  gap: 6px;
+  align-items: center;
+  gap: var(--space-md);
+  padding: 0 var(--space-xl);
+  border-left: 1px solid var(--border-main);
+  background: var(--text-primary);
+  color: var(--bg-primary);
 }
 
 .clockLabel {
+  font-family: var(--font-sans);
   font-size: 0.6rem;
-  font-weight: 500;
-  color: var(--text-muted);
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
+  opacity: 0.8;
 }
 
 .clockTime {
   font-family: var(--font-mono);
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  letter-spacing: 0.02em;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
 }

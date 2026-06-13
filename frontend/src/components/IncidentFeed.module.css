@@ -3,18 +3,20 @@
   flex-direction: column;
   height: 100%;
   overflow: hidden;
+  background: var(--bg-primary);
 }
 
 .count {
   margin-left: auto;
-  background: var(--accent-emerald-dim);
-  color: var(--accent-emerald);
-  font-size: 0.65rem;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 100px;
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 2px 6px;
   min-width: 22px;
   text-align: center;
+  border: 1px solid var(--border-main);
 }
 
 .feed {
@@ -24,6 +26,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
+  background: var(--bg-primary);
 }
 
 /* ─── Empty State ─── */
@@ -34,26 +37,29 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-sm);
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 .empty p {
+  font-family: var(--font-mono);
   font-size: 0.85rem;
-  color: var(--text-secondary);
-  font-weight: 500;
+  color: var(--text-primary);
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 .empty span {
+  font-family: var(--font-sans);
   font-size: 0.72rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 .emptyPulse {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  background: var(--accent-emerald-dim);
-  animation: pulse-dot 2.5s ease-in-out infinite;
+  border: 2px solid var(--border-main);
+  background: var(--bg-secondary);
+  animation: blink-cursor 1.5s step-end infinite;
   margin-bottom: var(--space-sm);
 }
 
@@ -64,33 +70,42 @@
   gap: var(--space-sm);
   padding: var(--space-md) var(--space-lg);
   background: var(--bg-elevated);
-  border: 1px solid var(--border-subtle);
-  border-left: 3px solid var(--text-muted);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--border-main);
+  border-left: 6px solid var(--border-main); /* Thick default border */
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.1s;
   text-align: left;
   font-family: inherit;
   color: inherit;
-  animation: fadeInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fadeInUp 0.2s ease-out forwards;
   opacity: 0;
   width: 100%;
 }
 
 .card:hover {
-  background: var(--bg-tertiary);
-  border-color: var(--border-medium);
+  background: var(--bg-secondary);
 }
 
 .cardActive {
-  background: var(--bg-tertiary);
-  border-color: var(--accent-emerald) !important;
-  border-left-color: var(--accent-emerald) !important;
-  box-shadow: var(--shadow-glow-emerald);
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border-color: var(--border-main) !important;
+  border-left-width: 12px !important;
+}
+.cardActive .classification, .cardActive .metaItem {
+  color: var(--bg-primary);
+}
+.cardActive .agentDot {
+  border-color: var(--bg-primary);
+}
+.cardActive .agentCountLabel {
+  color: var(--bg-primary);
 }
 
 .cardResolved {
-  opacity: 0.7;
+  opacity: 0.5;
+  background: var(--bg-secondary);
+  border-left-width: 1px; /* very thin when resolved */
 }
 
 .cardResolved:hover {
@@ -105,81 +120,95 @@
 }
 
 .severityBadge {
-  font-size: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
-  padding: 2px 8px;
-  border-radius: 100px;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
   text-transform: uppercase;
+  border: 1px solid var(--border-main);
+  color: var(--text-primary) !important; /* Force black text */
+  background: transparent !important;
 }
 
 .resolvedBadge {
   margin-left: auto;
-  font-size: 0.6rem;
-  font-weight: 600;
-  color: var(--accent-emerald);
-  letter-spacing: 0.03em;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.cardActive .resolvedBadge {
+  color: var(--bg-primary);
 }
 
 .classification {
-  font-size: 0.88rem;
-  font-weight: 600;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 800;
   color: var(--text-primary);
-  line-height: 1.3;
+  line-height: 1.2;
+  text-transform: uppercase;
 }
 
 .meta {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
 }
 
 .metaItem {
   display: flex;
   align-items: center;
-  gap: 5px;
-  font-size: 0.7rem;
-  color: var(--text-tertiary);
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
 }
 
 .metaItem svg {
   flex-shrink: 0;
-  opacity: 0.6;
 }
 
 /* ─── Agent Progress ─── */
 .agentProgress {
   display: flex;
   align-items: center;
-  gap: 5px;
-  margin-top: 2px;
+  gap: 6px;
+  margin-top: var(--space-xs);
 }
 
 .agentDot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--bg-secondary);
-  border: 1.5px solid var(--text-muted);
-  transition: all 0.3s;
+  width: 10px;
+  height: 10px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-main);
+  transition: background 0.1s;
 }
 
 .agentDotActive {
-  background: var(--accent-emerald);
-  border-color: var(--accent-emerald);
-  box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
+  background: var(--text-primary);
+}
+.cardActive .agentDotActive {
+  background: var(--bg-primary);
 }
 
 .agentCountLabel {
   margin-left: auto;
   font-family: var(--font-mono);
-  font-size: 0.62rem;
-  color: var(--text-muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-secondary);
 }
 
 .resolutionTime {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
-  color: var(--accent-emerald);
-  font-weight: 500;
+  font-size: 0.7rem;
+  color: var(--text-primary);
+  font-weight: 800;
+}
+.cardActive .resolutionTime {
+  color: var(--bg-primary);
 }

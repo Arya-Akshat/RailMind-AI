@@ -3,6 +3,7 @@
   flex-direction: column;
   height: 100%;
   overflow: hidden;
+  background: var(--bg-primary);
 }
 
 .content {
@@ -11,17 +12,18 @@
   padding: var(--space-lg);
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: var(--space-xl);
 }
 
 /* ─── Section Label ─── */
 .sectionLabel {
-  font-size: 0.68rem;
-  font-weight: 600;
-  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-primary);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: var(--space-xs);
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-sm);
   display: block;
 }
 
@@ -35,19 +37,19 @@
 .scenarios {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--space-md);
 }
 
 .scenarioBtn {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
-  padding: var(--space-md) var(--space-lg);
+  padding: var(--space-md);
   background: var(--bg-elevated);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--border-main);
+  box-shadow: 3px 3px 0px 0px var(--border-main);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: transform 0.05s, box-shadow 0.05s, background 0.1s;
   text-align: left;
   font-family: var(--font-sans);
   color: var(--text-primary);
@@ -55,23 +57,24 @@
 }
 
 .scenarioBtn:hover {
-  background: var(--bg-tertiary);
-  border-color: var(--border-medium);
-  transform: translateY(-1px);
+  background: var(--bg-secondary);
 }
 
 .scenarioBtn:active {
-  transform: translateY(0);
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px 0px 0px var(--border-main);
 }
 
 .scenarioBtn:disabled {
   opacity: 0.6;
   cursor: wait;
   transform: none;
+  box-shadow: 3px 3px 0px 0px var(--border-main);
 }
 
 .scenarioBtnLoading {
-  border-color: var(--accent-emerald);
+  background: var(--bg-secondary);
+  border-left: 6px solid var(--border-main);
 }
 
 .scenarioBtnHeader {
@@ -83,52 +86,59 @@
 
 .scenarioIcon {
   flex-shrink: 0;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-main);
+  background: var(--bg-primary);
+  color: var(--text-primary) !important;
 }
 
 .scenarioInfo {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 2px;
   min-width: 0;
 }
 
 .scenarioName {
-  font-size: 0.82rem;
-  font-weight: 600;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 800;
   color: var(--text-primary);
+  text-transform: uppercase;
 }
 
 .scenarioSeverity {
-  font-size: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.05em;
+  color: var(--text-primary) !important; /* Force high contrast */
 }
 
 .scenarioStatus {
   flex-shrink: 0;
-  color: var(--text-muted);
+  color: var(--text-primary);
   display: flex;
   align-items: center;
 }
 
 .scenarioDesc {
-  font-size: 0.7rem;
-  color: var(--text-tertiary);
-  line-height: 1.45;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin-top: 4px;
 }
 
 /* ─── Divider ─── */
 .divider {
   height: 1px;
-  background: var(--border-subtle);
+  background: var(--border-main);
 }
 
 /* ─── Reset ─── */
@@ -144,27 +154,34 @@
 }
 
 .resetHint {
-  font-size: 0.65rem;
-  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
   text-align: center;
+  margin-top: 4px;
 }
 
 /* ─── Footer ─── */
 .footer {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
-  padding-top: var(--space-sm);
-  border-top: 1px solid var(--border-subtle);
+  justify-content: space-between;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--border-main);
+  margin-top: auto;
 }
 
 .footerLabel {
-  font-size: 0.65rem;
-  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-primary);
 }
 
 .footerValue {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--text-tertiary);
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--text-primary);
 }
